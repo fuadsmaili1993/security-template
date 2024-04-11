@@ -1,0 +1,133 @@
+http://localhost:8080/user/enable?email=fs@efes.com
+
+{
+    "username": "fuad",
+    "password": "test123",
+    "email": "es@efes.com",
+    "enabled": 1
+}
+
+http://localhost:8080/api/employees
+
+
+{
+    "email": "ss1@efes.com",
+    "role":"USER"
+}
+
+
+
+add new user
+http://localhost:8080/user/add
+{
+    "username": "fuad",
+    "password": "test1231111111",
+    "email": "es@efes.com"
+}
+
+change password
+changepassword:
+http://localhost:8080/user/changepassword
+{
+    "email": "es@efes.com",
+    "existingPassword": "test123",
+    "newPassword": "test567"
+}
+
+
+
+login
+http://localhost:8080/user/login
+{
+    "email": "fs@efes.com",
+    "password": "fuad12345"
+}
+
+
+add role
+http://localhost:8080/user/addRole
+username=es@efes.com
+password=fuad12345
+{
+    "email": "fs@b.com",
+    "role": "EMPLOYEE"
+}
+this one will have only EMPLOYEE
+{
+    "email": "es@efes.com",
+    "role": "EMPLOYEE"
+}
+
+now es@efes.com which is having role EMPLOYEE will try do give someone role but it should be error(tested successfully)
+username=es@efes.com
+password=test567
+{
+    "email": "fs123@efes.com",
+    "role": "EMPLOYEE"
+}
+
+
+deleterole:
+http://localhost:8080/user/deleterole?email=fs123@efes.com     (successfull)
+username=es@efes.com
+password=fuad12345
+
+
+
+
+
+enable:
+now es@efes.com which is having role EMPLOYEE will try enable user but error should be thrown(tested successfully)
+http://localhost:8080/user/enable?email=fs123@efes.com
+username=es@efes.com
+password=test567
+
+now es@efes.com which is having role EMPLOYEE will try enable user but error should be thrown(tested successfully)
+http://localhost:8080/user/enable?email=fs123@efes.com
+username=es@efes.com
+password=fuad12345
+
+
+disable
+now es@efes.com which is having role EMPLOYEE will try enable user but error should be thrown(tested successfully)
+http://localhost:8080/user/disable?email=fs123@efes.com
+username=es@efes.com
+password=test567
+
+
+
+get single user:
+es@efes.com requests to get fs@efes.com but it does not have admin rights and can not get it (401 exception)
+http://localhost:8080/user/get?email=fs@efes.com
+username=es@efes.com
+password=test567
+
+es@efes.com requests to get es@efes.com and it is getting it because it is logged
+http://localhost:8080/user/get?email=es@efes.com
+username=es@efes.com
+password=test567
+
+fs@efes.com requests to get es@efes.com and it is getting it because fs@efes.com is admin
+http://localhost:8080/user/get?email=es@efes.com
+username=fs@efes.com
+password=fuad12345
+
+
+get all users (only admin)
+fs@efes.com requests to get all users it is getting them because fs@efes.com is admin
+http://localhost:8080/user/all
+username=fs@efes.com
+password=fuad12345
+
+
+reset password by token:
+token has to be in the database, by token and email we will find entry with email and expiritydate of token
+http://localhost:8080/user/resetbytoken
+{
+    "password": "fuad12345",
+    "token": "abc123",
+    "email": "fs123@efes.com"
+}
+
+
+
